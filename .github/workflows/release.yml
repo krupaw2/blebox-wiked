@@ -1,0 +1,38 @@
+name: Beta release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m unittest discover -s tests -v
+      - name: Publish beta
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          tag=v0.1.3-beta
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release already exists; not replacing it."
+            exit 0
+          fi
+          gh release create "$tag" blebox_wiked_install_0.1.3.py \
+            --target "$GITHUB_SHA" --prerelease \
+            --title "WIKĘD Smart 2.0 — v0.1.3 beta" \
+            --notes "Local IN1/IN2 events and controller action provisioning. Tested on HA Core 2026.11.3 / W-dU-2.0 firmware 0.1060. See README and CHANGELOG for installation and hardware validation limits. Not a HACS release."
