@@ -4,6 +4,29 @@ Local integration extension for WIKĘD Smart 2.0 door controllers (BleBox `doorU
 
 **Version 0.1.3 — beta.** Independent community project; not affiliated with WIKĘD, BleBox or Home Assistant.
 
+## Why this project exists
+
+WIKĘD Smart 2.0 is a **smart entrance door controller, not just a gate controller**. The standard Home Assistant BleBox integration treats its `gateBox` device type as a generic cover, exposing basic open/close control and position/status, while the door-specific lighting, handle setting and additional inputs are not exposed as dedicated entities.
+
+This project started with a simple goal: **control the three built-in door LED circuits directly from Home Assistant.** It has grown into a door-specific extension with independent lighting, native timed lighting commands, lock signals, handle control and physical button events — all through the local device API.
+
+## Before and after
+
+| Capability | Standard BleBox integration | WIKĘD extension |
+| --- | --- | --- |
+| Device representation | Generic gate/cover | WIKĘD Smart 2.0 door controller with dedicated entities |
+| Basic gate/cover control and status | Yes | Retained for compatibility |
+| LED 1, LED 2, LED 3 | Not exposed | Three independent light entities |
+| Timed LED activation | Not exposed | Three timed-light buttons, each with its own 1–3600 s duration |
+| Handle button enable/disable | Not exposed | Dedicated switch |
+| Electromechanical release | Generic cover operation | Dedicated release button (opt-in) |
+| S1 lock signal | Generic cover position/status | Dedicated lock binary sensor |
+| S2 lock signal | Not exposed | Dedicated lock binary sensor |
+| IN1 and IN2 button events | Not exposed | Dedicated event entities with explicit automatic action provisioning |
+| Firmware update | Yes | Retained |
+
+The legacy cover is retained, not renamed or replaced; S1 and S2 do not establish whether the door leaf is physically closed. LED outputs are on/off, not dimmable. See the validation section for the current hardware test coverage.
+
 ## Features
 
 | Entity | Function |
