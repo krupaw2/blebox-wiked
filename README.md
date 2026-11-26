@@ -41,6 +41,23 @@ The legacy cover is retained, not renamed or replaced; S1 and S2 do not establis
 
 The native cover and firmware update entities are retained. The extension activates only for the exact advertised WIKĘD product. No cloud account is required for the local integration.
 
+## Home Assistant screenshots
+
+Real device page from a working WIKĘD Smart 2.0 installation (Polish Home Assistant interface). The original generic cover is retained for compatibility.
+
+<table>
+  <tr>
+    <th>Door and lighting controls</th>
+    <th>Lock sensors, input events and firmware</th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/screenshots/wiked-controls.png" alt="WIKĘD controls: release button, three LED outputs with individual timers, and handle enable switch" width="360"></td>
+    <td valign="top"><img src="docs/screenshots/wiked-sensors-events.png" alt="WIKĘD lock sensors S1 and S2, IN1 and IN2 event entities, and firmware update" width="360"></td>
+  </tr>
+</table>
+
+The images show the actual installation after adding the extension. The original interface is described in the comparison table above; no reconstructed before screenshot is used.
+
 ## Compatibility and validation
 
 Tested installation: Home Assistant Core 2026.11.3, W-dU-2.0 hardware, firmware 0.1060.
