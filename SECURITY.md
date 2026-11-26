@@ -1,5 +1,7 @@
 # Security
 
+**English** · [Polski](SECURITY.pl.md)
+
 This project controls physical access hardware. Report suspected security issues privately to the repository maintainer; do not post webhook identifiers, access tokens, private URLs, packet captures or detailed home configurations in public issues. If GitHub private vulnerability reporting is enabled, use it.
 
 ## Safety boundaries

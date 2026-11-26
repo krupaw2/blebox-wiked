@@ -1,5 +1,7 @@
 # Local API observations
 
+**English** · [Polski](API.pl.md)
+
 Device: `doorUnitBox_v2`, type `gateBox`, hardware `W-dU-2.0`, firmware `0.1060`, API level `20230102`, addon API level `20220713`.
 
 The `/info` response advertises switch addons 0–2 (LED 1–3), settingsSwitch addon 3 (Button), sensor addon 4 (lockSensor S2). Discover addon IDs dynamically rather than assuming these IDs for all devices.

@@ -1,5 +1,14 @@
 # Changelog
 
+**English** · [Polski](CHANGELOG.pl.md)
+
+## 0.1.4 — development candidate (unreleased)
+
+- Native Home Assistant Polish and English entity names, input event labels and translated errors.
+- Readable Python modules and reproducible standalone installer build.
+- Preserve native translation resources and existing entity unique IDs and event identifiers.
+- Additional translation and build regression tests. Hardware validation of this candidate is pending.
+
 ## 0.1.3 — beta (2026-11-26)
 
 - Native HA event entities for IN1 and IN2.

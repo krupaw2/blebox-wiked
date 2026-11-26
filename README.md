@@ -4,7 +4,7 @@
 
 Local integration extension for WIKĘD Smart 2.0 door controllers (BleBox `doorUnitBox_v2`).
 
-**Version 0.1.3 — beta.** Independent community project; not affiliated with WIKĘD, BleBox or Home Assistant.
+**Latest hardware-tested beta: 0.1.3.** Version 0.1.4 is a development candidate with Polish and English localization; it has not yet been validated on the physical door. Independent community project; not affiliated with WIKĘD, BleBox or Home Assistant.
 
 ## Why this project exists
 
@@ -58,7 +58,7 @@ Real device page from a working WIKĘD Smart 2.0 installation (Polish Home Assis
   </tr>
 </table>
 
-The images show the actual installation after adding the extension. The original interface is described in the comparison table above. Entity names in this beta are not fully localized; some are in Polish and some in English.
+The images show the actual installation after adding the extension. The original interface is described in the comparison table above. Entity names in this beta are not fully localized; some are in Polish and some in English. The 0.1.4 candidate adds native HA translation resources; the screenshots show 0.1.3.
 
 ## Compatibility and validation
 
@@ -118,6 +118,12 @@ python3 /config/blebox_wiked_install_0.1.3.py --remove && ha core check && ha co
 The removed overlay is retained in `/config/blebox_wiked_removed`; removal stops if that backup directory already exists. The built-in integration loads on restart.
 
 ## Development
+
+The readable source is in [`src/`](src/). [`scripts/build_installer.py`](scripts/build_installer.py) builds the single-file installer for the 0.1.4 candidate. The existing 0.1.3 release remains unchanged. Candidate changes retain entity unique IDs and event identifiers; display names may follow the Home Assistant language or existing user overrides. Do not install the candidate on an access-critical door without hardware validation.
+
+```sh
+python3 scripts/build_installer.py --check
+```
 
 ```sh
 python3 -m unittest discover -s tests -v
