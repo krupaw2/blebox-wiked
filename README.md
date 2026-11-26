@@ -61,3 +61,14 @@ Tests cover parsing, input state mapping, payload syntax and overwrite protectio
 
 - [Local API documentation](docs/API.md)
 - [BleBox issue #210](https://github.com/blebox/blebox_uniapi/issues/210)
+
+
+## Experimental input events (0.1.3)
+
+The `feature/input-events` branch adds a candidate installer, `blebox_wiked_install_0.1.3.py`. It retains the existing controls and adds local HA event entities for IN1 and IN2. The **Configure input events** button explicitly provisions two independent URL actions in free device slots; it does not replace existing user actions or send a door release command. Setup does not write device configuration automatically. The configured webhooks use random persistent identifiers and accept only local HTTP GET requests.
+
+IN1 reports `doorbell`; IN2 reports `doorbell` when the handle is disabled, `pressed` when enabled, or `pressed_unknown` if its setting cannot be read. The classification is based on the fresh setting at reception, not an atomic snapshot at the physical input edge. The native conditional release remains independent of HA.
+
+This is a hardware-test candidate, not a released version. HTTP delivery, installed HA compatibility, action URL length and both handle modes still require validation. Back up HA and the device action inventory before opting in. Repeated configuration reuses only actions belonging to this entry. Removing the overlay does not remove provisioned device actions; remove only the two integration-managed actions using wBox if retiring the feature. An old test action created separately in wBox is not managed by the integration.
+
+The offline regression tests do not exercise an actual device or HA runtime.
