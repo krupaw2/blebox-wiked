@@ -7,14 +7,14 @@ import tempfile
 import unittest
 from types import SimpleNamespace
 
-INSTALLER = Path(__file__).resolve().parents[1] / 'blebox_wiked_install_0.1.3.py'
+INSTALLER = Path(__file__).resolve().parents[1] / 'blebox_wiked_install_0.1.4.py'
 spec = importlib.util.spec_from_file_location('installer', INSTALLER)
 installer = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(installer)
 
 # Extract real implementations without importing Home Assistant dependencies.
 class Base:
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         pass
 class BinarySensorEntity:
     pass

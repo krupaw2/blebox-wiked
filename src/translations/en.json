@@ -1,0 +1,73 @@
+{
+  "entity": {
+    "switch": {
+      "wiked_handle": {
+        "name": "Handle button"
+      }
+    },
+    "binary_sensor": {
+      "wiked_s1": {
+        "name": "S1"
+      },
+      "wiked_s2": {
+        "name": "S2"
+      }
+    },
+    "button": {
+      "wiked_release": {
+        "name": "Door release"
+      },
+      "wiked_timed": {
+        "name": "{output} timed activation"
+      },
+      "wiked_configure_inputs": {
+        "name": "Configure input events"
+      }
+    },
+    "number": {
+      "wiked_duration": {
+        "name": "{output} lighting duration"
+      }
+    },
+    "event": {
+      "wiked_input": {
+        "name": "{input}",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "doorbell": "Doorbell",
+              "pressed": "Pressed",
+              "pressed_unknown": "Pressed (handle state unknown)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "wiked_unsupported_output": {
+      "message": "Unsupported WIKĘD output."
+    },
+    "wiked_invalid_duration": {
+      "message": "Lighting duration must be between 1 and 3600 seconds."
+    },
+    "wiked_command_failed": {
+      "message": "The controller did not confirm the command."
+    },
+    "wiked_release_failed": {
+      "message": "The door release command failed."
+    },
+    "wiked_local_http": {
+      "message": "Input events require a direct local HTTP Home Assistant URL."
+    },
+    "wiked_local_host": {
+      "message": "Input events require a local IP address or a .local hostname."
+    },
+    "wiked_local_address": {
+      "message": "Input events require a local address."
+    },
+    "wiked_action_failed": {
+      "message": "Action configuration failed. Check the controller action list before retrying."
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "entity": {
+    "switch": {
+      "wiked_handle": {
+        "name": "Przycisk pochwytu"
+      }
+    },
+    "binary_sensor": {
+      "wiked_s1": {
+        "name": "S1"
+      },
+      "wiked_s2": {
+        "name": "S2"
+      }
+    },
+    "button": {
+      "wiked_release": {
+        "name": "Elektrozaczep"
+      },
+      "wiked_timed": {
+        "name": "{output} czasowo"
+      },
+      "wiked_configure_inputs": {
+        "name": "Skonfiguruj zdarzenia wejściowe"
+      }
+    },
+    "number": {
+      "wiked_duration": {
+        "name": "{output} czas świecenia"
+      }
+    },
+    "event": {
+      "wiked_input": {
+        "name": "{input}",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "doorbell": "Dzwonek",
+              "pressed": "Naciśnięcie",
+              "pressed_unknown": "Naciśnięcie (nieznany stan pochwytu)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "wiked_unsupported_output": {
+      "message": "Nieobsługiwane wyjście WIKĘD."
+    },
+    "wiked_invalid_duration": {
+      "message": "Czas świecenia musi wynosić od 1 do 3600 sekund."
+    },
+    "wiked_command_failed": {
+      "message": "Sterownik nie potwierdził wykonania polecenia."
+    },
+    "wiked_release_failed": {
+      "message": "Nie udało się wykonać polecenia zwolnienia elektrozaczepu."
+    },
+    "wiked_local_http": {
+      "message": "Zdarzenia wejściowe wymagają bezpośredniego lokalnego adresu HTTP Home Assistanta."
+    },
+    "wiked_local_host": {
+      "message": "Zdarzenia wejściowe wymagają lokalnego adresu IP lub nazwy hosta .local."
+    },
+    "wiked_local_address": {
+      "message": "Zdarzenia wejściowe wymagają lokalnego adresu."
+    },
+    "wiked_action_failed": {
+      "message": "Konfiguracja akcji nie powiodła się. Przed ponowieniem sprawdź listę akcji sterownika."
+    }
+  }
+}
