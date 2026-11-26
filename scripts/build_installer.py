@@ -27,7 +27,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    output = ROOT / "blebox_wiked_install_0.1.4.py"
+    output = ROOT / "blebox_wiked_install_0.1.5.py"
     generated = build()
     if args.check:
         if not output.exists() or output.read_text(encoding="utf-8") != generated:

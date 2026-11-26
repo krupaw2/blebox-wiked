@@ -4,7 +4,7 @@
 
 Rozszerzenie lokalnej integracji BleBox, przeznaczone dla sterowników drzwi wejściowych WIKĘD Smart 2.0 (`doorUnitBox_v2`).
 
-**Najnowsza wersja beta sprawdzona na sprzęcie: 0.1.3.** Wersja 0.1.4 jest kandydatem rozwojowym z polskimi i angielskimi tłumaczeniami; nie została jeszcze sprawdzona na fizycznych drzwiach. Niezależny projekt społecznościowy, niepowiązany z producentami WIKĘD i BleBox ani z projektem Home Assistant.
+**Najnowsza wersja beta sprawdzona na sprzęcie: 0.1.3.** Wersja 0.1.5 jest kandydatem rozwojowym z tłumaczeniami PL/EN i poprawką regresji nazw encji zaobserwowanej w 0.1.4. Poprawkę obejmują testy offline; pozostaje sprawdzenie na rzeczywistej instalacji. Niezależny projekt społecznościowy, niepowiązany z producentami WIKĘD i BleBox ani z projektem Home Assistant.
 
 ## Dlaczego powstał ten projekt?
 
@@ -58,7 +58,7 @@ Rzeczywista strona urządzenia w działającej instalacji WIKĘD Smart 2.0. Doty
   </tr>
 </table>
 
-Zrzuty pokazują rzeczywisty stan po zainstalowaniu rozszerzenia. Różnice względem standardowej integracji opisano w tabeli powyżej. W tej wersji beta nazwy encji nie są jeszcze w pełni zlokalizowane — część występuje po polsku, a część po angielsku. Kandydat 0.1.4 zawiera natywne zasoby tłumaczeń HA; zrzuty przedstawiają wersję 0.1.3.
+Zrzuty pokazują rzeczywisty stan po zainstalowaniu rozszerzenia. Różnice względem standardowej integracji opisano w tabeli powyżej. W tej wersji beta nazwy encji nie są jeszcze w pełni zlokalizowane — część występuje po polsku, a część po angielsku. Kandydat 0.1.5 zawiera natywne zasoby tłumaczeń HA; zrzuty przedstawiają wersję 0.1.3.
 
 ## Kompatybilność i zakres testów
 
@@ -120,7 +120,7 @@ Usunięta nakładka pozostaje w katalogu `/config/blebox_wiked_removed`. Jeśli 
 
 ## Rozwój i testy
 
-Czytelny kod źródłowy znajduje się w katalogu [`src/`](src/). Skrypt [`scripts/build_installer.py`](scripts/build_installer.py) generuje jednoplikowy instalator kandydata 0.1.4. Dotychczasowe wydanie 0.1.3 pozostaje niezmienione. Kandydat zachowuje identyfikatory unikatowe encji i identyfikatory zdarzeń; nazwy wyświetlane mogą zależeć od języka Home Assistanta lub ustawień użytkownika. Nie instaluj kandydata na drzwiach istotnych dla bezpieczeństwa bez walidacji sprzętowej.
+Czytelny kod źródłowy znajduje się w katalogu [`src/`](src/). Skrypt [`scripts/build_installer.py`](scripts/build_installer.py) generuje jednoplikowy instalator kandydata 0.1.5. Dotychczasowe wydanie 0.1.3 pozostaje niezmienione. Kandydat zachowuje identyfikatory unikatowe encji i identyfikatory zdarzeń; nazwy wyświetlane mogą zależeć od języka Home Assistanta lub ustawień użytkownika. Nie instaluj kandydata na drzwiach istotnych dla bezpieczeństwa bez walidacji sprzętowej.
 
 ```sh
 python3 scripts/build_installer.py --check

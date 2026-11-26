@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 from urllib.parse import urlsplit
 
-installer_path = Path(__file__).resolve().parents[1] / "blebox_wiked_install_0.1.4.py"
+installer_path = Path(__file__).resolve().parents[1] / "blebox_wiked_install_0.1.5.py"
 spec = importlib.util.spec_from_file_location("installer_inputs", installer_path)
 installer = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(installer)

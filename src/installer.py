@@ -98,7 +98,7 @@ def patch(target, version):
     (target/'wiked.py').write_text(PAYLOAD + "\n\n_base_entities_for = entities_for\n\ndef entities_for(coordinator, platform):\n    entities = _base_entities_for(coordinator, platform)\n    if platform == 'button' and getattr(coordinator, 'input_events', None) is not None:\n        from .wiked_inputs import WikedConfigureInputs\n        entities.append(WikedConfigureInputs(coordinator))\n    return entities\n",encoding='utf-8')
     manifest_path = target/'manifest.json'
     manifest = json.loads(manifest_path.read_text())
-    manifest['version'] = '0.1.4'
+    manifest['version'] = '0.1.5'
     manifest['dependencies'] = sorted(set(manifest.get('dependencies', [])) | {'webhook'})
     manifest_path.write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
     if (target/'strings.json').exists() and not (target/'translations'/'en.json').exists():

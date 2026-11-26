@@ -121,8 +121,13 @@ class WikedEntity(CoordinatorEntity):
         super().__init__(coordinator)
         box = coordinator.native.box
         self._attr_unique_id = f"{box.unique_id}_wiked_{suffix}"
-        self._attr_name = name
-        self._attr_translation_key = translation_key
+        # HA gives an explicitly set _attr_name (even None) priority over translations.
+        if translation_key is None:
+            if name is None:
+                raise ValueError("WIKED entity requires a name or translation key")
+            self._attr_name = name
+        else:
+            self._attr_translation_key = translation_key
         if placeholders is not None:
             self._attr_translation_placeholders = placeholders
         self._attr_device_info = DeviceInfo(identifiers={(DOMAIN, box.unique_id)},
@@ -132,10 +137,10 @@ class WikedEntity(CoordinatorEntity):
 
 
 class AddonEntity(WikedEntity):
-    def __init__(self, coordinator, addon_id):
+    def __init__(self, coordinator, addon_id, *, translation_key=None):
         self.addon_id = addon_id
         name = coordinator.addons[addon_id].get("name") or f"Addon {addon_id}"
-        super().__init__(coordinator, f"addon_{addon_id}", name)
+        super().__init__(coordinator, f"addon_{addon_id}", name, translation_key=translation_key)
 
     @property
     def addon_state(self):
@@ -169,9 +174,7 @@ class WikedSettingsSwitch(AddonEntity, SwitchEntity):
     _attr_icon = "mdi:gesture-tap-button"
 
     def __init__(self, coordinator, addon_id):
-        super().__init__(coordinator, addon_id)
-        self._attr_name = None
-        self._attr_translation_key = "wiked_handle"
+        super().__init__(coordinator, addon_id, translation_key="wiked_handle")
 
     @property
     def is_on(self):
@@ -188,9 +191,7 @@ class WikedBolt(AddonEntity, BinarySensorEntity):
     _attr_device_class = BinarySensorDeviceClass.LOCK
 
     def __init__(self, coordinator, addon_id):
-        super().__init__(coordinator, addon_id)
-        self._attr_name = None
-        self._attr_translation_key = "wiked_s2"
+        super().__init__(coordinator, addon_id, translation_key="wiked_s2")
 
     @property
     def extra_state_attributes(self):
@@ -228,7 +229,7 @@ class WikedS1(WikedEntity, BinarySensorEntity):
 
 class WikedRelease(WikedEntity, ButtonEntity):
     _attr_icon = "mdi:door-open"
-    # Opt-in until the existing open operation is verified on the actual door.
+    # Explicit opt-in for physical access control.
     _attr_entity_registry_enabled_default = False
 
     def __init__(self, coordinator, feature):

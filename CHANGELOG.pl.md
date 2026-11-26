@@ -2,6 +2,12 @@
 
 [English](CHANGELOG.md) · **Polski**
 
+## 0.1.5 — kandydat rozwojowy (niewydany)
+
+- Naprawa zastępowania nazw encji nazwą urządzenia: tłumaczone encje nie ustawiają już `_attr_name`, również na `None`.
+- Test regresji konstruktorów wszystkich tłumaczonych encji w obu językach oraz zachowania identyfikatorów unikatowych.
+- Bez zmian poleceń sterownika, konfiguracji zdarzeń i istniejących identyfikatorów webhooków.
+
 ## 0.1.4 — kandydat rozwojowy (niewydany)
 
 - Natywne tłumaczenia nazw encji, etykiet zdarzeń wejściowych i błędów w Home Assistancie na język polski i angielski.
