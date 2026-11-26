@@ -161,8 +161,6 @@ def main():
         else:
             stage.rename(dest)
     print(f'Installed WIKED overlay from {origin} into {dest}.')
-    print('No device commands were sent. Run ha core check, then restart Core if check passes.')
-    print('Old cover remains for migration; disable it manually after validating the new button.')
 
 if __name__=='__main__':
     main()
