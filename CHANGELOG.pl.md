@@ -15,6 +15,7 @@
 - Lokalne webhooki z tajnymi identyfikatorami oraz jawna konfiguracja akcji z weryfikacją odczytu.
 - Klasyfikacja zdarzeń IN2 na podstawie aktualnego ustawienia przycisku pochwytu.
 - Siedem potwierdzonych zdarzeń IN2 na sterowniku W-dU-2.0 z oprogramowaniem 0.1060 i HA Core 2026.11.3.
+- Działanie dedykowanego przycisku elektrozaczepu HA potwierdzone na rzeczywistej instalacji przez właściciela.
 - Obserwacje API, testy regresji offline i artefakt instalatora w CI.
 
 ## 0.1.2

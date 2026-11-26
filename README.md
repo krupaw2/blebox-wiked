@@ -67,7 +67,8 @@ Tested installation: Home Assistant Core 2026.11.3, W-dU-2.0 hardware, firmware 
 - IN2: seven end-to-end events verified, including both handle modes.
 - S1: mechanical key state changes verified.
 - LED switching and timed commands: verified in wBox traffic.
-- IN1 physical delivery, S2 transitions, HA release button and operation during HA downtime: not independently verified.
+- Door release: the installation owner confirmed that pressing the dedicated Home Assistant button activates the electric strike and releases the door (26 November 2026).
+- IN1 and S2: supported by the implementation and offline tests; separate physical IN1 delivery and S2 transitions have not been recorded. Operation during HA downtime has not been independently verified.
 - No LED dimming support has been established.
 
 S1 and S2 are lock signals, not proof that the door leaf is closed. Wiring varies between installations.

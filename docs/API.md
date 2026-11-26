@@ -12,7 +12,7 @@ Observed local commands for each advertised lighting output: `GET /a/{id}/s/0`, 
 
 S1 is read from `gate.currentPos`; 0 maps to locked and 100 maps to unlocked. S1 changes with the mechanical key on the tested installation; this does not establish physical door position. S2 is read from the separate sensor addon value; 0 maps to unlocked based on wBox display, but the active transition and polarity have not been independently confirmed. Wiring varies by installation. Never infer that the door leaf is closed merely from a bolt sensor.
 
-The release button uses the native open operation. It is disabled by default; hardware verification is pending.
+The release button uses the native open operation and is disabled by default as an explicit opt-in. On 26 November 2026 the installation owner confirmed that pressing the dedicated HA button activates the electric strike and releases the door.
 
 The documented behavior applies to firmware 0.1060.
 

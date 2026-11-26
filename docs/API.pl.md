@@ -12,7 +12,7 @@ Zaobserwowane polecenia lokalne dla każdego zgłoszonego wyjścia oświetlenia:
 
 S1 jest odczytywany z `gate.currentPos`: 0 oznacza zaryglowanie, 100 — odryglowanie. S1 zmienia się przy użyciu klucza mechanicznego w testowanej instalacji, ale nie potwierdza położenia skrzydła. S2 jest odczytywany z wartości osobnego rozszerzenia sensor; 0 odpowiada odryglowaniu na podstawie wskazania wBox, lecz zmiana stanu i polaryzacja nie zostały niezależnie potwierdzone. Sposób podłączenia zależy od instalacji. Nie należy wnioskować o domknięciu skrzydła wyłącznie na podstawie sygnału rygla.
 
-Przycisk elektrozaczepu wykorzystuje natywną operację otwierania. Jest domyślnie wyłączony; wymaga testu sprzętowego.
+Przycisk elektrozaczepu wykorzystuje natywną operację otwierania i jest domyślnie wyłączony, aby wymagać świadomego włączenia. 26 listopada 2026 r. właściciel instalacji potwierdził, że naciśnięcie dedykowanego przycisku HA uruchamia elektrozaczep i zwalnia drzwi.
 
 Opisane zachowanie dotyczy oprogramowania 0.1060.
 

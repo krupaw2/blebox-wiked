@@ -67,7 +67,8 @@ Instalacja testowa: Home Assistant Core 2026.11.3, sterownik W-dU-2.0, oprogramo
 - **IN2:** potwierdzono siedem zdarzeń od sterownika do Home Assistanta, w obu trybach pracy przycisku pochwytu.
 - **S1:** potwierdzono zmiany stanu podczas używania klucza mechanicznego.
 - **LED:** polecenia włączania, wyłączania i pracy czasowej zweryfikowano w ruchu sieciowym aplikacji wBox.
-- **Do potwierdzenia na sprzęcie:** dostarczenie fizycznych zdarzeń IN1, zmiany stanu S2, przycisk elektrozaczepu w HA oraz działanie podczas niedostępności HA.
+- **Elektrozaczep:** właściciel instalacji potwierdził 26 listopada 2026 r., że naciśnięcie dedykowanego przycisku w Home Assistancie uruchamia elektrozaczep i zwalnia drzwi.
+- **IN1 i S2:** obsługiwane przez integrację i objęte testami offline; nie odnotowano odrębnego testu fizycznego zdarzenia IN1 ani zmiany stanu S2. Nie potwierdzono niezależnie działania podczas niedostępności HA.
 - Nie potwierdzono możliwości regulacji jasności LED.
 
 S1 i S2 są sygnałami zamka, a nie potwierdzeniem fizycznego zamknięcia skrzydła. Sposób podłączenia może się różnić w poszczególnych instalacjach.

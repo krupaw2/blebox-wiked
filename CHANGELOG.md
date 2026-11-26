@@ -15,6 +15,7 @@
 - Local secret webhooks and explicit action provisioning with read-back checks.
 - IN2 event classification based on the current handle setting.
 - Seven IN2 events verified on W-dU-2.0 firmware 0.1060 with HA Core 2026.11.3.
+- Dedicated HA electric-strike release confirmed on the physical installation by its owner.
 - API observations, offline regression tests and CI installer artifact.
 
 ## 0.1.2
