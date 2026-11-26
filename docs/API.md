@@ -49,3 +49,9 @@ A local HTTP capture of wBox confirmed `POST /api/actions/set` with `Content-Typ
 The device returned HTTP 200 with an `action` object; a subsequent GET confirmed that only slot 2 changed. The response omitted `throttleS`. Whether the request can omit runtime metadata or other fields has not been tested. Despite the test action's name, its input was 0 (IN1).
 
 Preserve native conditional release and other user actions. Any integration-managed URL actions should be separately allocated and verified by reading back their configuration. Outbound event delivery, authentication, and handling of short or repeated input pulses still require testing. Do not interpret an unknown handle setting as permission to unlock.
+
+## Additional action editor capabilities
+
+The owner reported that the wBox action editor exposes rising edge, state change, button hold, end of button hold, gate not closed, and unexpected action trigger options. The exact wording of the state-change option and the numeric identifiers of the additional trigger types have not been independently captured. The editor also exposes no action, set state, control another device, URL invocation, notification and custom notification; two URL-related labels were reported, whose distinction remains unverified.
+
+These are UI observations, not verified API mappings or hardware behavior. The existing captured rising-edge trigger (4) and URL action (50) are the only combination verified end to end for HA input events. Hold detection and release could support additional event types without polling physical inputs. A hold may also trigger the existing rising-edge action; do not assume mutually exclusive gestures or change native release behavior. No PWM or dimming support follows from these action choices.
