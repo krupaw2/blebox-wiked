@@ -14,8 +14,38 @@ The release button uses the native open operation. It is disabled by default; ha
 
 The documented behavior applies to firmware 0.1060.
 
-## Physical input actions
+## Physical inputs and actions
 
-Verified on W-dU-2.0 firmware 0.1060: `GET /api/actions/state` returns an `actions` array, `itemsLimit: 30`, and field constraints. Existing installation has action 0 (`OPEN`): `input: 1`, `triggerType: 4`, `actionType: 100`, `param: http://localhost/s/p/conditional`; action 1 (bell): `input: 0`, `triggerType: 4`, `actionType: 52`. Input 0 corresponds to IN1 (bell), input 1 to IN2 (handle); trigger 4 corresponds to rising edge. Action 100 calls a URL. An empty slot has actionType and triggerType 0 and an empty parameter. `lastCall.timeElapsedS` is runtime metadata, not a configuration field; -1 was observed for unused actions.
+Verified on W-dU-2.0 firmware 0.1060:
 
-Preserve the native conditional OPEN action and other user actions. Proposed HA event delivery uses separate URL actions for IN1/IN2; door release remains local. The HA integration can use the existing handle setting to decide whether an IN2 event should act as a bell. Unknown or unavailable handle state must not cause an unlock. No action write schema has been verified; OPTIONS returning HTTP 200 on `/api/actions/set` alone does not establish write support. Do not send speculative configuration updates to deployed door controllers.
+- `GET /api/input/state` returns `{"inputs":[{"input":0,"state":0},{"input":1,"state":0}]}`. The two entries report physical input levels; their transitions during a button press and the minimum pulse length have not yet been measured.
+- `GET /api/actions/state` returns an `actions` array, `itemsLimit: 30`, and field constraints.
+- Input 0 corresponds to IN1 (bell); input 1 corresponds to IN2 (handle). Trigger type 4 is the rising-edge trigger.
+- Existing native action: input 1, trigger type 4, action type 100, parameter `http://localhost/s/p/conditional`. This is the conditional local release operation, not evidence that type 100 is a general-purpose URL action.
+- Action type 52 was observed for a notification. Action type 50 was observed when saving a URL action in wBox; the actual outbound request has not yet been captured.
+- Empty slots have action type and trigger type 0 and an empty parameter. `lastCall.timeElapsedS` is runtime metadata; -1 was observed for unused actions.
+
+### Writing one action
+
+A local HTTP capture of wBox confirmed `POST /api/actions/set` with `Content-Type: application/json`. The following example retains the observed request structure, with the destination replaced by a documentation-only address:
+
+```json
+{
+  "action": {
+    "id": 2,
+    "name": "HA - HANDLE TEST",
+    "input": 0,
+    "triggerType": 4,
+    "actionType": 50,
+    "lastCall": {"timeElapsedS": -1},
+    "triggerParam": 0,
+    "param": "http://192.0.2.1:8123",
+    "throttleS": 0,
+    "intervalS": 0
+  }
+}
+```
+
+The device returned HTTP 200 with an `action` object; a subsequent GET confirmed that only slot 2 changed. The response omitted `throttleS`. Whether the request can omit runtime metadata or other fields has not been tested. Despite the test action's name, its input was 0 (IN1).
+
+Preserve native conditional release and other user actions. Any integration-managed URL actions should be separately allocated and verified by reading back their configuration. Outbound event delivery, authentication, and handling of short or repeated input pulses still require testing. Do not interpret an unknown handle setting as permission to unlock.
