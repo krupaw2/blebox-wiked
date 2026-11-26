@@ -13,3 +13,9 @@ S1 is read from `gate.currentPos`; 0 maps to locked and 100 maps to unlocked. S1
 The release button uses the native open operation. It is disabled by default; hardware verification is pending.
 
 The documented behavior applies to firmware 0.1060.
+
+## Physical input actions
+
+Verified on W-dU-2.0 firmware 0.1060: `GET /api/actions/state` returns an `actions` array, `itemsLimit: 30`, and field constraints. Existing installation has action 0 (`OPEN`): `input: 1`, `triggerType: 4`, `actionType: 100`, `param: http://localhost/s/p/conditional`; action 1 (bell): `input: 0`, `triggerType: 4`, `actionType: 52`. Input 0 corresponds to IN1 (bell), input 1 to IN2 (handle); trigger 4 corresponds to rising edge. Action 100 calls a URL. An empty slot has actionType and triggerType 0 and an empty parameter. `lastCall.timeElapsedS` is runtime metadata, not a configuration field; -1 was observed for unused actions.
+
+Preserve the native conditional OPEN action and other user actions. Proposed HA event delivery uses separate URL actions for IN1/IN2; door release remains local. The HA integration can use the existing handle setting to decide whether an IN2 event should act as a bell. Unknown or unavailable handle state must not cause an unlock. No action write schema has been verified; OPTIONS returning HTTP 200 on `/api/actions/set` alone does not establish write support. Do not send speculative configuration updates to deployed door controllers.
