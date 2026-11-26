@@ -1,5 +1,7 @@
 # WIKĘD Smart 2.0 for Home Assistant
 
+**English** · [Polski](README.pl.md)
+
 Local integration extension for WIKĘD Smart 2.0 door controllers (BleBox `doorUnitBox_v2`).
 
 **Version 0.1.3 — beta.** Independent community project; not affiliated with WIKĘD, BleBox or Home Assistant.
@@ -56,7 +58,7 @@ Real device page from a working WIKĘD Smart 2.0 installation (Polish Home Assis
   </tr>
 </table>
 
-The images show the actual installation after adding the extension. The original interface is described in the comparison table above; no reconstructed before screenshot is used.
+The images show the actual installation after adding the extension. The original interface is described in the comparison table above. Entity names in this beta are not fully localized; some are in Polish and some in English.
 
 ## Compatibility and validation
 
@@ -75,7 +77,7 @@ S1 and S2 are lock signals, not proof that the door leaf is closed. Wiring varie
 This beta is an overlay of the native BleBox integration, not a standalone HACS integration. It copies the matching native integration and adds WIKĘD support in `/config/custom_components/blebox`. It refuses to overwrite an unrelated custom component.
 
 1. Back up Home Assistant and the controller action inventory.
-2. Copy [blebox_wiked_install_0.1.3.py](blebox_wiked_install_0.1.3.py) to `/config`.
+2. Download `blebox_wiked_install_0.1.3.py` from the [v0.1.3 beta release](https://github.com/krupaw2/blebox-wiked/releases/tag/v0.1.3-beta) and copy it to `/config`.
 3. Run in the HA Terminal & SSH add-on (Python 3 is required; on Alpine, install with `apk add --no-cache python3` if needed):
 
 ```sh
@@ -92,7 +94,7 @@ The previous overlay is backed up. The overlay takes precedence over the built-i
 
 ## Physical input events
 
-Open the WIKĘD device in Home Assistant and press **Configure input events** once. The integration allocates two free action slots and verifies the configuration after each write. Existing user actions, including native conditional release, are preserved. Installation and startup do not write action configuration.
+Open the WIKĘD device in Home Assistant and press **Configure input events** once. The integration allocates or reuses two managed action slots and verifies the configuration after each write. Existing user actions, including native conditional release, are preserved by design. If a write succeeds but a subsequent check or write fails, one managed action may remain configured; inspect the action inventory before retrying. Installation and startup do not write action configuration.
 
 | Input | Handle setting | Event type |
 | --- | --- | --- |
