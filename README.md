@@ -1,78 +1,93 @@
 # WIKĘD Smart 2.0 for Home Assistant
 
-Extension of the BleBox integration for WIKĘD Smart 2.0 door controllers (`doorUnitBox_v2`).
+Local integration extension for WIKĘD Smart 2.0 door controllers (BleBox `doorUnitBox_v2`).
+
+**Version 0.1.3 — beta.** Independent community project; not affiliated with WIKĘD, BleBox or Home Assistant.
 
 ## Features
 
-- Three independent LED outputs.
-- Timed lighting with an individual duration of 1–3600 seconds per output.
-- Handle button enable/disable.
-- Separate S1 and S2 binary sensors.
-- Door release button (disabled by default).
-- Existing BleBox cover and firmware update entities.
+| Entity | Function |
+| --- | --- |
+| Light | Three independently controlled LED outputs (on/off) |
+| Number / button | Individual timed lighting, 1–3600 seconds |
+| Switch | Enable or disable native handle release |
+| Binary sensor | S1 and S2 lock signals |
+| Button | Native door release (disabled by default) |
+| Event | IN1 and IN2 physical input events |
+| Button | Configure input events on the controller |
 
-## Compatibility
+The native cover and firmware update entities are retained. The extension activates only for the exact advertised WIKĘD product. No cloud account is required for the local integration.
 
-Installed on Home Assistant Core 2026.11.3 with W-dU-2.0 hardware, firmware 0.1060. S1 state changes verified in Home Assistant. LED switching and timed commands verified in wBox traffic. HA lighting controls, S2 transitions and the release button still require hardware verification.
+## Compatibility and validation
+
+Tested installation: Home Assistant Core 2026.11.3, W-dU-2.0 hardware, firmware 0.1060.
+
+- IN2: seven end-to-end events verified, including both handle modes.
+- S1: mechanical key state changes verified.
+- LED switching and timed commands: verified in wBox traffic.
+- IN1 physical delivery, S2 transitions, HA release button and operation during HA downtime: not independently verified.
+- No LED dimming support has been established.
+
+S1 and S2 are lock signals, not proof that the door leaf is closed. Wiring varies between installations.
 
 ## Installation
 
-The installer copies the matching BleBox integration to `/config/custom_components/blebox` and adds WIKĘD support. Existing unrelated custom integrations are not overwritten.
+This beta is an overlay of the native BleBox integration, not a standalone HACS integration. It copies the matching native integration and adds WIKĘD support in `/config/custom_components/blebox`. It refuses to overwrite an unrelated custom component.
 
-Back up Home Assistant before installation. Python 3 is required in the terminal. On the Alpine-based Terminal & SSH add-on, if Python is missing:
-
-```sh
-apk add --no-cache python3
-```
-
-Copy `blebox_wiked_install_0.1.2.py` to `/config` and run:
+1. Back up Home Assistant and the controller action inventory.
+2. Copy [blebox_wiked_install_0.1.3.py](blebox_wiked_install_0.1.3.py) to `/config`.
+3. Run in the HA Terminal & SSH add-on (Python 3 is required; on Alpine, install with `apk add --no-cache python3` if needed):
 
 ```sh
-python3 /config/blebox_wiked_install_0.1.2.py && ha core check && ha core restart
+python3 /config/blebox_wiked_install_0.1.3.py && ha core check && ha core restart
 ```
 
-Keep the existing cover entity until the release button is verified. S1 and S2 report input states, not the physical position of the door.
-
-## Updates
+For an existing WIKĘD overlay:
 
 ```sh
-python3 /config/blebox_wiked_install_0.1.2.py --upgrade && ha core check && ha core restart
+python3 /config/blebox_wiked_install_0.1.3.py --upgrade && ha core check && ha core restart
 ```
 
-The installer backs up the previous overlay. The overlay persists across Home Assistant updates and takes precedence over the built-in BleBox integration. Check compatibility after Core updates. HACS installation is not supported in this version.
+The previous overlay is backed up. The overlay takes precedence over the built-in integration and persists across Core updates. Recheck compatibility after updating Core. Keep working native controls until their replacements are validated.
 
-## Removal
+## Physical input events
+
+Open the WIKĘD device in Home Assistant and press **Configure input events** once. The integration allocates two free action slots and verifies the configuration after each write. Existing user actions, including native conditional release, are preserved. Installation and startup do not write action configuration.
+
+| Input | Handle setting | Event type |
+| --- | --- | --- |
+| IN1 | Any | `doorbell` |
+| IN2 | Disabled | `doorbell` |
+| IN2 | Enabled | `pressed` |
+| IN2 | Unknown | `pressed_unknown` |
+
+The event entities initially have an unknown state until an event arrives. The device must be able to reach HA's local HTTP address. Webhooks use persistent random identifiers and accept local GET requests. The handle state is read at event reception, not atomically at the input edge.
+
+Events never issue a door release command. Native release remains controlled by the original device action. A hidden handle button is not a substitute for a publicly accessible doorbell.
+
+## Removal and recovery
+
+Before removing the overlay, remove only its two managed URL actions (`HA IN1` and `HA IN2`) in wBox, verifying their webhook URLs. Do not remove native OPEN or other user actions. The installer does not remove actions from the device.
 
 ```sh
-python3 /config/blebox_wiked_install_0.1.2.py --remove && ha core check && ha core restart
+python3 /config/blebox_wiked_install_0.1.3.py --remove && ha core check && ha core restart
 ```
 
-The removed overlay is saved in `/config/blebox_wiked_removed`. Removal stops if this directory already exists. The built-in integration is loaded on restart; custom entities may remain in the entity registry.
+The removed overlay is retained in `/config/blebox_wiked_removed`; removal stops if that backup directory already exists. The built-in integration loads on restart.
 
-## Tests
+## Development
 
 ```sh
 python3 -m unittest discover -s tests -v
 ```
 
-Tests cover parsing, input state mapping, payload syntax and overwrite protection. They do not require Home Assistant or physical devices.
+Offline tests cover parsing, entity state mapping, action allocation, preservation, idempotency and overwrite protection. They do not replace hardware tests.
 
-## Links
+- [Local API observations](docs/API.md)
+- [Changelog](CHANGELOG.md)
+- [Security policy](SECURITY.md)
+- [Upstream BleBox issue #210](https://github.com/blebox/blebox_uniapi/issues/210)
 
-- [Local API documentation](docs/API.md)
-- [BleBox issue #210](https://github.com/blebox/blebox_uniapi/issues/210)
+## License
 
-
-## Experimental input events (0.1.3)
-
-The `feature/input-events` branch adds a candidate installer, `blebox_wiked_install_0.1.3.py`. It retains the existing controls and adds local HA event entities for IN1 and IN2. The **Configure input events** button explicitly provisions two independent URL actions in free device slots; it does not replace existing user actions or send a door release command. Setup does not write device configuration automatically. The configured webhooks use random persistent identifiers and accept only local HTTP GET requests.
-
-IN1 reports `doorbell`; IN2 reports `doorbell` when the handle is disabled, `pressed` when enabled, or `pressed_unknown` if its setting cannot be read. The classification is based on the fresh setting at reception, not an atomic snapshot at the physical input edge. The native conditional release remains independent of HA.
-
-This is a hardware-test candidate, not a released version. HTTP delivery, installed HA compatibility, action URL length and both handle modes still require validation. Back up HA and the device action inventory before opting in. Repeated configuration reuses only actions belonging to this entry. Removing the overlay does not remove provisioned device actions; remove only the two integration-managed actions using wBox if retiring the feature. An old test action created separately in wBox is not managed by the integration.
-
-The offline regression tests do not exercise an actual device or HA runtime.
-
-### Hardware validation — 2026-11-26
-
-W-dU-2.0 firmware 0.1060, HA Core 2026.11.3: overlay installed, event entities and provisioning button present. Integration-managed IN2 events reached Home Assistant: five `doorbell` events with the handle disabled and two `pressed` events with it enabled. Switching the handle setting in both directions resulted in the expected subsequent event type (7/7 observed events). This confirms end-to-end URL event delivery and mode classification on one installation. IN1 was not physically connected on the tested unit; IN1 delivery, independent operation during HA downtime, and mechanical release behavior are not established by the event log alone.
+Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE). The installer obtains the matching Home Assistant integration from the installed Core or the official source; upstream code retains its original license and attribution.
