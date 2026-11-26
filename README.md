@@ -4,7 +4,9 @@
 
 Local integration extension for WIKĘD Smart 2.0 door controllers (BleBox `doorUnitBox_v2`).
 
-**Latest hardware-tested beta: 0.1.3.** Version 0.1.5 is a development candidate with Polish and English localization and a fix for the entity-name regression observed in 0.1.4. The fix is covered by offline tests; physical verification is pending. Independent community project; not affiliated with WIKĘD, BleBox or Home Assistant.
+**Current release: [v0.1.5 beta](https://github.com/krupaw2/blebox-wiked/releases/tag/v0.1.5-beta).** Polish and English localization, with corrected entity names confirmed in a running Home Assistant installation. Independent community project; not affiliated with WIKĘD, BleBox or Home Assistant.
+
+[Download the installer](https://github.com/krupaw2/blebox-wiked/releases/download/v0.1.5-beta/blebox_wiked_install_0.1.5.py) · [Installation instructions](#installation)
 
 ## Why this project exists
 
@@ -58,11 +60,13 @@ Real device page from a working WIKĘD Smart 2.0 installation (Polish Home Assis
   </tr>
 </table>
 
-The images show the actual installation after adding the extension. The original interface is described in the comparison table above. Entity names in this beta are not fully localized; some are in Polish and some in English. The 0.1.5 candidate adds native HA translation resources; the screenshots show 0.1.3.
+The images show the actual installation after adding the extension. The original interface is described in the comparison table above. The screenshots show the earlier 0.1.3 interface. Version 0.1.5 uses native Home Assistant Polish and English translation resources.
 
 ## Compatibility and validation
 
 Tested installation: Home Assistant Core 2026.11.3, W-dU-2.0 hardware, firmware 0.1060.
+
+- Version 0.1.5: Polish entity names and event labels verified visually on the running installation after upgrading from 0.1.4. The English resources and constructors pass offline tests; the English interface has not been separately inspected on hardware. The functional hardware tests below were recorded on 0.1.3.
 
 - IN2: seven end-to-end events verified, including both handle modes.
 - S1: mechanical key state changes verified.
@@ -78,17 +82,17 @@ S1 and S2 are lock signals, not proof that the door leaf is closed. Wiring varie
 This beta is an overlay of the native BleBox integration, not a standalone HACS integration. It copies the matching native integration and adds WIKĘD support in `/config/custom_components/blebox`. It refuses to overwrite an unrelated custom component.
 
 1. Back up Home Assistant and the controller action inventory.
-2. Download `blebox_wiked_install_0.1.3.py` from the [v0.1.3 beta release](https://github.com/krupaw2/blebox-wiked/releases/tag/v0.1.3-beta) and copy it to `/config`.
+2. Download `blebox_wiked_install_0.1.5.py` from the [v0.1.5 beta release](https://github.com/krupaw2/blebox-wiked/releases/tag/v0.1.5-beta) and copy it to `/config`.
 3. Run in the HA Terminal & SSH add-on (Python 3 is required; on Alpine, install with `apk add --no-cache python3` if needed):
 
 ```sh
-python3 /config/blebox_wiked_install_0.1.3.py && ha core check && ha core restart
+python3 /config/blebox_wiked_install_0.1.5.py && ha core check && ha core restart
 ```
 
 For an existing WIKĘD overlay:
 
 ```sh
-python3 /config/blebox_wiked_install_0.1.3.py --upgrade && ha core check && ha core restart
+python3 /config/blebox_wiked_install_0.1.5.py --upgrade && ha core check && ha core restart
 ```
 
 The previous overlay is backed up. The overlay takes precedence over the built-in integration and persists across Core updates. Recheck compatibility after updating Core. Keep working native controls until their replacements are validated.
@@ -113,14 +117,14 @@ Events never issue a door release command. Native release remains controlled by 
 Before removing the overlay, remove only its two managed URL actions (`HA IN1` and `HA IN2`) in wBox, verifying their webhook URLs. Do not remove native OPEN or other user actions. The installer does not remove actions from the device.
 
 ```sh
-python3 /config/blebox_wiked_install_0.1.3.py --remove && ha core check && ha core restart
+python3 /config/blebox_wiked_install_0.1.5.py --remove && ha core check && ha core restart
 ```
 
 The removed overlay is retained in `/config/blebox_wiked_removed`; removal stops if that backup directory already exists. The built-in integration loads on restart.
 
 ## Development
 
-The readable source is in [`src/`](src/). [`scripts/build_installer.py`](scripts/build_installer.py) builds the single-file installer for the 0.1.5 candidate. The existing 0.1.3 release remains unchanged. Candidate changes retain entity unique IDs and event identifiers; display names may follow the Home Assistant language or existing user overrides. Do not install the candidate on an access-critical door without hardware validation.
+The readable source is in [`src/`](src/). [`scripts/build_installer.py`](scripts/build_installer.py) builds the single-file installer for 0.1.5. The previous 0.1.3 release remains available. Entity unique IDs and event identifiers are retained; display names may follow the Home Assistant language or existing user overrides. Validate operation on your own hardware before relying on this beta for access-critical functions.
 
 ```sh
 python3 scripts/build_installer.py --check

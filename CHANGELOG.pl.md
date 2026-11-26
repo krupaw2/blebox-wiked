@@ -2,18 +2,19 @@
 
 [English](CHANGELOG.md) · **Polski**
 
-## 0.1.5 — kandydat rozwojowy (niewydany)
+## 0.1.5 — beta (2026-11-26)
 
 - Naprawa zastępowania nazw encji nazwą urządzenia: tłumaczone encje nie ustawiają już `_attr_name`, również na `None`.
 - Test regresji konstruktorów wszystkich tłumaczonych encji w obu językach oraz zachowania identyfikatorów unikatowych.
 - Bez zmian poleceń sterownika, konfiguracji zdarzeń i istniejących identyfikatorów webhooków.
+- Poprawne polskie nazwy encji i etykiety zdarzeń potwierdzone w działającej instalacji; 20 testów offline zakończonych poprawnie.
 
-## 0.1.4 — kandydat rozwojowy (niewydany)
+## 0.1.4 — wycofany kandydat rozwojowy (niewydany)
 
 - Natywne tłumaczenia nazw encji, etykiet zdarzeń wejściowych i błędów w Home Assistancie na język polski i angielski.
 - Czytelne moduły Pythona i powtarzalne generowanie jednoplikowego instalatora.
 - Zachowanie natywnych zasobów tłumaczeń oraz identyfikatorów unikatowych encji i identyfikatorów zdarzeń.
-- Dodatkowe testy regresji tłumaczeń i procesu budowania. Kandydat wymaga jeszcze testów sprzętowych.
+- Dodatkowe testy regresji tłumaczeń i procesu budowania. Zastąpiony wersją 0.1.5 po wykryciu regresji nazw encji.
 
 ## 0.1.3 — beta (2026-11-26)
 

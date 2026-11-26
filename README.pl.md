@@ -4,7 +4,9 @@
 
 Rozszerzenie lokalnej integracji BleBox, przeznaczone dla sterowników drzwi wejściowych WIKĘD Smart 2.0 (`doorUnitBox_v2`).
 
-**Najnowsza wersja beta sprawdzona na sprzęcie: 0.1.3.** Wersja 0.1.5 jest kandydatem rozwojowym z tłumaczeniami PL/EN i poprawką regresji nazw encji zaobserwowanej w 0.1.4. Poprawkę obejmują testy offline; pozostaje sprawdzenie na rzeczywistej instalacji. Niezależny projekt społecznościowy, niepowiązany z producentami WIKĘD i BleBox ani z projektem Home Assistant.
+**Aktualne wydanie: [v0.1.5 beta](https://github.com/krupaw2/blebox-wiked/releases/tag/v0.1.5-beta).** Tłumaczenia PL/EN i poprawione nazwy encji, potwierdzone w działającej instalacji Home Assistanta. Niezależny projekt społecznościowy, niepowiązany z producentami WIKĘD i BleBox ani z projektem Home Assistant.
+
+[Pobierz instalator](https://github.com/krupaw2/blebox-wiked/releases/download/v0.1.5-beta/blebox_wiked_install_0.1.5.py) · [Instrukcja instalacji](#instalacja)
 
 ## Dlaczego powstał ten projekt?
 
@@ -58,11 +60,13 @@ Rzeczywista strona urządzenia w działającej instalacji WIKĘD Smart 2.0. Doty
   </tr>
 </table>
 
-Zrzuty pokazują rzeczywisty stan po zainstalowaniu rozszerzenia. Różnice względem standardowej integracji opisano w tabeli powyżej. W tej wersji beta nazwy encji nie są jeszcze w pełni zlokalizowane — część występuje po polsku, a część po angielsku. Kandydat 0.1.5 zawiera natywne zasoby tłumaczeń HA; zrzuty przedstawiają wersję 0.1.3.
+Zrzuty pokazują rzeczywisty stan po zainstalowaniu rozszerzenia. Różnice względem standardowej integracji opisano w tabeli powyżej. Zrzuty przedstawiają wcześniejszy interfejs 0.1.3. Wersja 0.1.5 korzysta z natywnych tłumaczeń Home Assistanta na język polski i angielski.
 
 ## Kompatybilność i zakres testów
 
 Instalacja testowa: Home Assistant Core 2026.11.3, sterownik W-dU-2.0, oprogramowanie sprzętowe 0.1060.
+
+- **Wersja 0.1.5:** poprawne polskie nazwy encji i etykiety zdarzeń potwierdzono wizualnie w działającej instalacji po aktualizacji z 0.1.4. Angielskie zasoby językowe i konstruktory encji przechodzą testy offline; angielskiego interfejsu nie sprawdzano osobno na sprzęcie. Poniższe testy funkcjonalne wykonano w wersji 0.1.3.
 
 - **IN2:** potwierdzono siedem zdarzeń od sterownika do Home Assistanta, w obu trybach pracy przycisku pochwytu.
 - **S1:** potwierdzono zmiany stanu podczas używania klucza mechanicznego.
@@ -78,24 +82,24 @@ S1 i S2 są sygnałami zamka, a nie potwierdzeniem fizycznego zamknięcia skrzyd
 Wersja beta działa jako nakładka na natywną integrację BleBox, a nie jako samodzielna integracja HACS. Instalator kopiuje wersję natywnej integracji odpowiadającą zainstalowanemu Core i rozszerza ją o obsługę WIKĘD w katalogu `/config/custom_components/blebox`. Odmawia nadpisania innego komponentu niestandardowego.
 
 1. Wykonaj kopię zapasową Home Assistanta oraz zapisz konfigurację akcji sterownika.
-2. Pobierz plik `blebox_wiked_install_0.1.3.py` z [wydania v0.1.3 beta](https://github.com/krupaw2/blebox-wiked/releases/tag/v0.1.3-beta) i skopiuj go do `/config`.
+2. Pobierz plik `blebox_wiked_install_0.1.5.py` z [wydania v0.1.5 beta](https://github.com/krupaw2/blebox-wiked/releases/tag/v0.1.5-beta) i skopiuj go do `/config`.
 3. Uruchom polecenie w dodatku Terminal & SSH (wymagany Python 3; w systemie Alpine można go doinstalować poleceniem `apk add --no-cache python3`):
 
 ```sh
-python3 /config/blebox_wiked_install_0.1.3.py && ha core check && ha core restart
+python3 /config/blebox_wiked_install_0.1.5.py && ha core check && ha core restart
 ```
 
 Aktualizacja istniejącej nakładki WIKĘD:
 
 ```sh
-python3 /config/blebox_wiked_install_0.1.3.py --upgrade && ha core check && ha core restart
+python3 /config/blebox_wiked_install_0.1.5.py --upgrade && ha core check && ha core restart
 ```
 
 Poprzednia wersja nakładki zostaje zachowana jako kopia zapasowa. Nakładka ma pierwszeństwo przed wbudowaną integracją i pozostaje aktywna po aktualizacji Core. Po każdej aktualizacji Core sprawdź kompatybilność. Zachowaj działające natywne elementy sterowania do czasu potwierdzenia poprawnego działania ich odpowiedników.
 
 ## Zdarzenia z wejść fizycznych
 
-Na stronie urządzenia WIKĘD w Home Assistancie naciśnij przycisk **Configure input events**. Integracja przydziela wolne lub wykorzystuje ponownie dwa zarządzane miejsca na akcje i po każdym zapisie odczytuje konfigurację w celu jej weryfikacji. Istniejące akcje użytkownika, w tym natywne warunkowe zwalnianie elektrozaczepu, są z założenia zachowywane. Jeśli zapis się powiedzie, ale późniejsza weryfikacja lub kolejny zapis zakończy się błędem, jedna zarządzana akcja może pozostać skonfigurowana; przed ponowieniem sprawdź listę akcji. Instalacja i uruchomienie integracji nie zapisują konfiguracji akcji.
+Na stronie urządzenia WIKĘD w Home Assistancie naciśnij przycisk **Skonfiguruj zdarzenia wejściowe**. Integracja przydziela wolne lub wykorzystuje ponownie dwa zarządzane miejsca na akcje i po każdym zapisie odczytuje konfigurację w celu jej weryfikacji. Istniejące akcje użytkownika, w tym natywne warunkowe zwalnianie elektrozaczepu, są z założenia zachowywane. Jeśli zapis się powiedzie, ale późniejsza weryfikacja lub kolejny zapis zakończy się błędem, jedna zarządzana akcja może pozostać skonfigurowana; przed ponowieniem sprawdź listę akcji. Instalacja i uruchomienie integracji nie zapisują konfiguracji akcji.
 
 | Wejście | Ustawienie przycisku pochwytu | Typ zdarzenia |
 | --- | --- | --- |
@@ -113,14 +117,14 @@ Zdarzenia nigdy nie wysyłają polecenia zwolnienia elektrozaczepu. Natywne zwal
 Przed usunięciem nakładki usuń w aplikacji wBox wyłącznie dwie zarządzane akcje URL (`HA IN1` i `HA IN2`), po sprawdzeniu adresów webhooków. Nie usuwaj natywnej akcji OPEN ani innych akcji użytkownika. Instalator nie usuwa akcji ze sterownika.
 
 ```sh
-python3 /config/blebox_wiked_install_0.1.3.py --remove && ha core check && ha core restart
+python3 /config/blebox_wiked_install_0.1.5.py --remove && ha core check && ha core restart
 ```
 
 Usunięta nakładka pozostaje w katalogu `/config/blebox_wiked_removed`. Jeśli katalog kopii zapasowej już istnieje, operacja zostaje przerwana. Po ponownym uruchomieniu Home Assistanta ładowana jest wbudowana integracja.
 
 ## Rozwój i testy
 
-Czytelny kod źródłowy znajduje się w katalogu [`src/`](src/). Skrypt [`scripts/build_installer.py`](scripts/build_installer.py) generuje jednoplikowy instalator kandydata 0.1.5. Dotychczasowe wydanie 0.1.3 pozostaje niezmienione. Kandydat zachowuje identyfikatory unikatowe encji i identyfikatory zdarzeń; nazwy wyświetlane mogą zależeć od języka Home Assistanta lub ustawień użytkownika. Nie instaluj kandydata na drzwiach istotnych dla bezpieczeństwa bez walidacji sprzętowej.
+Czytelny kod źródłowy znajduje się w katalogu [`src/`](src/). Skrypt [`scripts/build_installer.py`](scripts/build_installer.py) generuje jednoplikowy instalator 0.1.5. Poprzednie wydanie 0.1.3 pozostaje dostępne. Identyfikatory unikatowe encji i identyfikatory zdarzeń zostają zachowane; nazwy wyświetlane mogą zależeć od języka Home Assistanta lub ustawień użytkownika. Przed wykorzystaniem wersji beta do funkcji istotnych dla bezpieczeństwa sprawdź jej działanie we własnej instalacji.
 
 ```sh
 python3 scripts/build_installer.py --check
