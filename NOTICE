@@ -1,0 +1,11 @@
+WIKĘD Smart 2.0 for Home Assistant
+Copyright 2026 the project contributors
+
+This independent project extends Home Assistant's BleBox integration.
+Home Assistant Core: https://github.com/home-assistant/core (Apache-2.0).
+BleBox UniAPI: https://github.com/blebox/blebox_uniapi (Apache-2.0;
+Copyright (c) 2020, Gadget Mobile).
+
+The installer copies the matching native integration and applies local modifications.
+Upstream license and attribution remain applicable. WIKĘD, BleBox and Home Assistant
+are the names of their respective products/projects; no affiliation is implied.
