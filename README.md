@@ -72,3 +72,7 @@ IN1 reports `doorbell`; IN2 reports `doorbell` when the handle is disabled, `pre
 This is a hardware-test candidate, not a released version. HTTP delivery, installed HA compatibility, action URL length and both handle modes still require validation. Back up HA and the device action inventory before opting in. Repeated configuration reuses only actions belonging to this entry. Removing the overlay does not remove provisioned device actions; remove only the two integration-managed actions using wBox if retiring the feature. An old test action created separately in wBox is not managed by the integration.
 
 The offline regression tests do not exercise an actual device or HA runtime.
+
+### Hardware validation — 2026-11-26
+
+W-dU-2.0 firmware 0.1060, HA Core 2026.11.3: overlay installed, event entities and provisioning button present. Integration-managed IN2 events reached Home Assistant: five `doorbell` events with the handle disabled and two `pressed` events with it enabled. Switching the handle setting in both directions resulted in the expected subsequent event type (7/7 observed events). This confirms end-to-end URL event delivery and mode classification on one installation. IN1 was not physically connected on the tested unit; IN1 delivery, independent operation during HA downtime, and mechanical release behavior are not established by the event log alone.
